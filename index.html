@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Snack Shack</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0" rel="stylesheet" />
+  <style>
+    :root {
+      --font-body: "DM Sans", sans-serif;
+      --font-heading: "Space Grotesk", sans-serif;
+      --bg: #f4efe7;
+      --surface: #fffdf9;
+      --surface-alt: #eee3d3;
+      --text: #382d26;
+      --muted: #75685d;
+      --accent: #a85d36;
+      --accent-soft: #d8a06f;
+      --line: #d8c8b5;
+      --shadow: 0 8px 20px rgba(73, 52, 36, 0.08);
+      --radius: 14px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      min-height: 100vh;
+      color: var(--text);
+      background: var(--bg);
+      overflow-x: hidden;
+    }
+
+    .material-symbols-outlined {
+      font-family: "Material Symbols Outlined";
+      font-weight: normal;
+      font-style: normal;
+      font-size: 1.2em;
+      line-height: 1;
+      letter-spacing: normal;
+      text-transform: none;
+      display: inline-block;
+      white-space: nowrap;
+      word-wrap: normal;
+      direction: ltr;
+      -webkit-font-feature-settings: "liga";
+      -webkit-font-smoothing: antialiased;
+      font-feature-settings: "liga";
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      display: none;
+      pointer-events: none;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .container {
+      width: min(1160px, calc(100% - 36px));
+      margin: 0 auto;
+    }
+
+    header {
+      z-index: 10;
+      background: var(--surface);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 18px 0;
+      gap: 16px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      font-family: var(--font-heading);
+      letter-spacing: -0.04em;
+      font-size: clamp(1.25rem, 2vw, 1.65rem);
+    }
+
+    .logo-badge {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      color: #fffaf2;
+      background: var(--accent);
+    }
+
+    .logo-badge .material-symbols-outlined {
+      font-size: 1.65rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 700;
+      color: var(--muted);
+    }
+
+    .nav-links a {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 10px 14px;
+      border-radius: 8px;
+      transition: color 0.2s ease, background 0.2s ease;
+    }
+
+    .nav-links a:hover {
+      color: var(--accent);
+      background: var(--surface-alt);
+    }
+
+    .hero {
+      display: grid;
+      grid-template-columns: 1.05fr 0.95fr;
+      align-items: center;
+      min-height: 480px;
+      gap: 48px;
+      padding: 64px 0 46px;
+    }
+
+    .tagline {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--text);
+      background: var(--surface-alt);
+      padding: 10px 15px;
+      border-radius: 8px;
+      font-weight: 900;
+      margin-bottom: 22px;
+    }
+
+    h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(2.8rem, 7vw, 5.5rem);
+      line-height: 0.95;
+      letter-spacing: -0.08em;
+      margin-bottom: 24px;
+    }
+
+    .accent-text {
+      color: var(--accent);
+    }
+
+    .hero p {
+      max-width: 620px;
+      font-size: clamp(1.05rem, 2vw, 1.25rem);
+      color: var(--muted);
+      line-height: 1.65;
+      margin-bottom: 30px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center;
+    }
+
+    .btn {
+      border: 0;
+      cursor: pointer;
+      padding: 14px 20px;
+      border-radius: 8px;
+      font-weight: 900;
+      font-size: 0.98rem;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    .btn-primary {
+      color: #fffaf2;
+      background: var(--accent);
+    }
+
+    .btn-secondary {
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--line);
+    }
+
+    .btn:hover {
+      background: var(--surface-alt);
+    }
+
+    .hero-image {
+      display: block;
+      width: min(100%, 520px);
+      height: auto;
+      justify-self: end;
+    }
+
+    section {
+      padding: 74px 0;
+    }
+
+    .section-heading {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 20px;
+      margin-bottom: 28px;
+    }
+
+    h2 {
+      font-family: var(--font-heading);
+      font-size: clamp(2rem, 4vw, 3.3rem);
+      line-height: 1;
+      letter-spacing: -0.06em;
+    }
+
+    .section-icon {
+      vertical-align: -0.18em;
+      margin-right: 6px;
+      color: var(--accent);
+    }
+
+    .section-heading p {
+      max-width: 420px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .toolbar {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 14px;
+      margin-bottom: 28px;
+    }
+
+    .search {
+      width: 100%;
+      color: var(--text);
+      font: inherit;
+      font-weight: 700;
+      padding: 17px 18px;
+      border-radius: 8px;
+      background: var(--surface);
+      border: 1px solid var(--line);
+      outline: none;
+    }
+
+    .search::placeholder {
+      color: var(--muted);
+    }
+
+    .filters {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .chip {
+      color: var(--text);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 12px 15px;
+      font-weight: 900;
+      cursor: pointer;
+    }
+
+    .chip.active {
+      color: #fffaf2;
+      background: var(--accent);
+      border-color: var(--accent);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 18px;
+    }
+
+    .snack-card {
+      position: relative;
+      min-height: 280px;
+      padding: 22px;
+      border-radius: var(--radius);
+      background: var(--surface);
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      transition: transform 0.22s ease, background 0.22s ease;
+    }
+
+    .snack-card:hover {
+      transform: translateY(-2px);
+      background: #fffaf2;
+    }
+
+    .snack-card::after {
+      display: none;
+    }
+
+    .snack-image {
+      display: block;
+      width: 100%;
+      height: 150px;
+      object-fit: contain;
+      margin-bottom: 18px;
+      position: relative;
+      z-index: 1;
+    }
+
+    .snack-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1.25rem;
+      margin-bottom: 7px;
+      letter-spacing: -0.03em;
+    }
+
+    .snack-card p {
+      color: var(--muted);
+      font-size: 0.93rem;
+      line-height: 1.5;
+      min-height: 42px;
+    }
+
+    .card-bottom {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .price {
+      font-size: 1.3rem;
+      font-weight: 950;
+      color: var(--accent);
+    }
+
+    .add-btn {
+      border: 0;
+      cursor: pointer;
+      padding: 10px 13px;
+      border-radius: 8px;
+      font-weight: 950;
+      color: #fffaf2;
+      background: var(--accent);
+    }
+
+    .cart-panel {
+      margin-top: 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 20px;
+      border-radius: var(--radius);
+      background: var(--surface-alt);
+      border: 1px solid var(--line);
+    }
+
+    .cart-panel strong {
+      color: var(--accent);
+    }
+
+    .info-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+    }
+
+    .info-card {
+      padding: 28px;
+      border-radius: var(--radius);
+      background: var(--surface);
+      border: 1px solid var(--line);
+    }
+
+    .info-card .icon {
+      font-size: 2.2rem;
+      margin-bottom: 14px;
+    }
+
+    .info-card h3 {
+      font-family: var(--font-heading);
+      margin-bottom: 9px;
+      font-size: 1.2rem;
+    }
+
+    .info-card p {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    footer {
+      padding: 34px 0 46px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    .toast {
+      position: fixed;
+      left: 50%;
+      bottom: 24px;
+      transform: translateX(-50%) translateY(120px);
+      padding: 14px 18px;
+      border-radius: 999px;
+      color: var(--text);
+      background: var(--surface);
+      font-weight: 900;
+      box-shadow: var(--shadow);
+      transition: transform 0.28s ease;
+      z-index: 20;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+    }
+
+    @media (max-width: 900px) {
+      .hero {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .info-cards {
+        grid-template-columns: 1fr;
+      }
+
+      .toolbar {
+        grid-template-columns: 1fr;
+      }
+
+      .filters {
+        justify-content: flex-start;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .nav {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+
+      .nav-links {
+        width: 100%;
+        overflow-x: auto;
+        padding-bottom: 4px;
+      }
+
+      .hero {
+        padding-top: 48px;
+      }
+
+      .grid {
+        grid-template-columns: 1fr;
+      }
+
+      .section-heading {
+        display: block;
+      }
+
+      .section-heading p {
+        margin-top: 12px;
+      }
+
+      .cart-panel {
+        align-items: flex-start;
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container nav">
+      <a class="logo" href="#top" aria-label="Snack Shack home">
+        <span class="logo-badge"><span class="material-symbols-outlined" aria-hidden="true">icecream</span></span>
+        <span>Snack Shack</span>
+      </a>
+      <nav class="nav-links" aria-label="Primary navigation">
+        <a href="#menu"><span class="material-symbols-outlined" aria-hidden="true">menu_book</span>Menu</a>
+        <a href="#visit"><span class="material-symbols-outlined" aria-hidden="true">location_on</span>Pickup information</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <section class="hero container">
+      <div>
+        <h1><span class="accent-text">Snack Shack</span></h1>
+        <p>Snack availability and prices are listed in the menu.</p>
+      </div>
+      <img class="hero-image" src="img/hero.png" alt="Assorted packaged snacks and chips" />
+    </section>
+
+    <section id="menu" class="container">
+      <div class="section-heading">
+        <div>
+          <h2><span class="material-symbols-outlined section-icon" aria-hidden="true">restaurant_menu</span>Menu and current prices</h2>
+        </div>
+        <p>This list contains the items currently available during lunch.</p>
+      </div>
+
+      <div class="toolbar">
+        <input class="search" id="searchInput" type="search" placeholder="Menu search" aria-label="Search snacks" />
+        <div class="filters" id="filters" aria-label="Menu filters"></div>
+      </div>
+
+      <div class="grid" id="snackGrid"></div>
+
+      <div class="cart-panel" aria-live="polite">
+        <div>
+          <strong id="cartCount">0 items</strong> selected.
+          Estimated total: <strong id="cartTotal">$0.00</strong>
+        </div>
+        <button class="btn btn-secondary" id="clearCart">Clear selection</button>
+      </div>
+    </section>
+
+    <section id="visit" class="container">
+      <div class="section-heading">
+        <h2>Pickup information</h2>
+        <p>Snack pickup is available during lunch near the main quad. Proceeds help fund school activities.</p>
+      </div>
+      <div class="info-card">
+        <h3><span class="material-symbols-outlined section-icon" aria-hidden="true">location_on</span>Location</h3>
+        <p>We are located near the main quad and accept cash during lunch hours.</p>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">Snack Shack</div>
+  </footer>
+
+  <div class="toast" id="toast">Added to your snack list!</div>
+
+  <script>
+    const snacks = [
+      { name: "Doritos", category: "Chips", price: 1.25, image: "img/doritos.png", description: "Corn chips with a seasoned flavor." },
+      { name: "Hot Cheetos", category: "Chips", price: 1.50, image: "img/hot_cheeto.png", description: "Crunchy corn chips with a spicy flavor." },
+      { name: "Takis", category: "Chips", price: 1.50, image: "img/takis.png", description: "Rolled corn chips with a spicy flavor." },
+      { name: "KitKat", category: "Candy", price: 1.50, image: "img/kitkat.png", description: "A chocolate-covered wafer bar." },
+      { name: "Reese's", category: "Candy", price: 1.50, image: "img/reeses.png", description: "A chocolate and peanut butter candy." },
+      { name: "Skittles", category: "Candy", price: 1.25, image: "img/skittles.png", description: "Small, colorful fruit-flavored candies." },
+      { name: "Sour Patch Kids", category: "Candy", price: 1.25, image: "img/sour_patch_kids.png", description: "Soft, sour candy pieces." },
+      { name: "Trolli", category: "Candy", price: 1.25, image: "img/trolli.png", description: "Gummy candy in assorted shapes." }
+    ];
+
+    const categories = ["All", ...new Set(snacks.map(item => item.category))];
+    const snackGrid = document.getElementById("snackGrid");
+    const filters = document.getElementById("filters");
+    const searchInput = document.getElementById("searchInput");
+    const cartCount = document.getElementById("cartCount");
+    const cartTotal = document.getElementById("cartTotal");
+    const clearCart = document.getElementById("clearCart");
+    const toast = document.getElementById("toast");
+
+    let activeCategory = "All";
+    let cart = [];
+
+    function formatMoney(value) {
+      return value.toLocaleString("en-US", { style: "currency", currency: "USD" });
+    }
+
+    function renderFilters() {
+      filters.innerHTML = categories.map(category => `
+        <button class="chip ${category === activeCategory ? "active" : ""}" data-category="${category}">${category}</button>
+      `).join("");
+    }
+
+    function renderSnacks() {
+      const searchTerm = searchInput.value.trim().toLowerCase();
+      const filtered = snacks.filter(item => {
+        const matchesCategory = activeCategory === "All" || item.category === activeCategory;
+        const matchesSearch = [item.name, item.category, item.description].join(" ").toLowerCase().includes(searchTerm);
+        return matchesCategory && matchesSearch;
+      });
+
+      snackGrid.innerHTML = filtered.length
+        ? filtered.map(item => `
+          <article class="snack-card">
+            <img class="snack-image" src="${item.image}" alt="${item.name}" />
+            <h3>${item.name}</h3>
+            <p>${item.description}</p>
+            <div class="card-bottom">
+              <span class="price">${formatMoney(item.price)}</span>
+              <button class="add-btn" data-name="${item.name}">Add</button>
+            </div>
+          </article>
+        `).join("")
+        : `<div class="info-card" style="grid-column: 1 / -1"><h3>No snacks match the current filters.</h3></div>`;
+    }
+
+    function updateCart() {
+      const total = cart.reduce((sum, item) => sum + item.price, 0);
+      const label = cart.length === 1 ? "1 item" : `${cart.length} items`;
+      cartCount.textContent = label;
+      cartTotal.textContent = formatMoney(total);
+    }
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => toast.classList.remove("show"), 1600);
+    }
+
+    filters.addEventListener("click", event => {
+      const button = event.target.closest("button[data-category]");
+      if (!button) return;
+      activeCategory = button.dataset.category;
+      renderFilters();
+      renderSnacks();
+    });
+
+    searchInput.addEventListener("input", renderSnacks);
+
+    snackGrid.addEventListener("click", event => {
+      const button = event.target.closest("button[data-name]");
+      if (!button) return;
+      const item = snacks.find(snack => snack.name === button.dataset.name);
+      cart.push(item);
+      updateCart();
+      showToast(`${item.name} added!`);
+    });
+
+    clearCart.addEventListener("click", () => {
+      cart = [];
+      updateCart();
+      showToast("All selected snacks have been removed.");
+    });
+
+    renderFilters();
+    renderSnacks();
+    updateCart();
+  </script>
+</body>
+</html>
